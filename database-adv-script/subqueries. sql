@@ -1,1 +1,38 @@
+_ _ 
+=================================================
+=================================================
+_ _ SUBQUERIES.SQL 
+_ _ Objectives; Practice both uncorrelated and correlated subqueries 
+_ _ 
 
+=================================================================
+===============================
+
+_ _ ================================================
+==============
+1. Uncorrelated subquery 
+_ _ Description ;Find all properties where the average rating is greater than 4.0 
+_ _Notes ; This subquery does not refrence the outer query ; it's independnt 
+_ _ =============================================================
+
+SELECT* 
+FROM properties
+WHERE property _id IN (
+FROM reviews 
+GROUP BY property_id 
+Having AVG (rating ) > 4.0 
+); 
+
+_ _ ====================================================
+
+2. Correlated Subquery 
+_ _ Description ; Find all users who have made more than 3 bookings 
+_ _ Notes: This subquery refrences the outer query (users) to count bookings per user
+_ _ =============================================
+SELECT * 
+FROM users u 
+WHERE ( 
+SELECT COUNT (*) 
+FROM bookings b 
+WHERE b.user _id =u.user_id 
+)>3; 
